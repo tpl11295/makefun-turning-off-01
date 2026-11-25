@@ -12,5 +12,11 @@ import { mkdirSync, writeFileSync } from "node:fs";
 // cannot read as another stock variant of the title.
 const line = "Don’t worry — the blue screen is just your computer taking a little nap, and naps can last anywhere from ten minutes to forever.";
 
+// Guard: the kit gate requires 1–199 characters; fail loudly instead of
+// submitting an entry the judge would never see.
+if (line.length < 1 || line.length > 199) {
+  throw new Error(`entry line must be 1–199 characters, got ${line.length}`);
+}
+
 mkdirSync("/output", { recursive: true });
 writeFileSync("/output/entry.txt", line, "utf8");
